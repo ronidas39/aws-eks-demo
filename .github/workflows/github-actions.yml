@@ -9,7 +9,8 @@ jobs:
   test:
     name: Upload to Amazon S3
     runs-on: ubuntu-latest
-    env:
+    defaults:
+      run:
        working-directory: ./dir1
     
     permissions:
