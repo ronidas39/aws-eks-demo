@@ -22,7 +22,7 @@ jobs:
         role-to-assume: arn:aws:iam::321089933200:role/testrone
         aws-region: us-east-1
 
-    - name: Copy files to the test website with AWS the CLI
+    - name: Copy files to the test website with AWS  CLI
       run: |
         aws s3 ls
      
