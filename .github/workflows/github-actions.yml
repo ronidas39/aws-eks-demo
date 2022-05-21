@@ -1,0 +1,28 @@
+name: Github Actions Example
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  test:
+    name: Upload to Amazon S3
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Configure AWS credentials from Test account
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::321089933200:role/testrone
+        aws-region: us-east-1
+
+    - name: Copy files to the test website with the AWS CLI
+      run: |
+        aws s3 ls
+     
