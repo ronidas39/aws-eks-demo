@@ -29,8 +29,8 @@ jobs:
   run-if-failed:
     runs-on: ubuntu-latest
     needs: [test]
-    if: always() && (needs.test.result == 'failure')
+    if: always() && (needs.test.result == 'success')
     steps:
       - name: Needs context
         run: |
-            aws iam list-users
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
