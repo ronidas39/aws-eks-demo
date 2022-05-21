@@ -12,7 +12,8 @@ jobs:
     defaults:
       run:
        working-directory: ./dir1
-    
+     
+
     permissions:
       id-token: write
       contents: read
