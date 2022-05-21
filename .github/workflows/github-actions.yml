@@ -9,6 +9,9 @@ jobs:
   test:
     name: Upload to Amazon S3
     runs-on: ubuntu-latest
+    env:
+       working-directory: ./
+    
     permissions:
       id-token: write
       contents: read
@@ -35,6 +38,6 @@ jobs:
         run: |
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
       - name: Run Eks
-        working-directory: ./
+        working-directory: ${{env.working-directory}}
         run: |
             ls -l
