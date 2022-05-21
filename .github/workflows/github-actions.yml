@@ -25,4 +25,12 @@ jobs:
     - name: Copy files to the test website with AWS  CLI
       run: |
         aws s3 ls
-     
+  
+  run-if-failed:
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: always() && (needs.test.result == 'failure')
+    steps:
+      - name: Needs context
+        run: |
+            aws iam list-users
