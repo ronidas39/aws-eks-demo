@@ -32,5 +32,6 @@ jobs:
       working-directory: ./dir2
       run: |
            kubectl get pods
+           kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
            kubectl get pvc
