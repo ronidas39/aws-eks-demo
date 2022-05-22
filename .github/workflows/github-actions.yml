@@ -33,10 +33,8 @@ jobs:
     if: always() && (needs.test.result == 'success')
     steps:
       - name: Needs context
-        run: |
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
-      - uses: actions/checkout@v2
-      
+        uses: actions/checkout@v2
+        
       - name: Run Eks
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -46,6 +44,8 @@ jobs:
       - name: run aws 
         working-directory: ./dir1
         run: |
+             run: |
+             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
              eksctl create cluster -f cluster.yaml
             
        
