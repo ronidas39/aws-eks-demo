@@ -39,7 +39,7 @@ jobs:
       - name: Needs context
         uses: actions/checkout@v2
            
-      - name: run aws 
+      - name: run aws install
         working-directory: ./dir1
         run: |
              run: |
