@@ -48,13 +48,12 @@ jobs:
   kubectl:
     runs-on: ubuntu-latest
     steps:
-    - name: kubectrl get cred
-    - uses: actions/checkout@v1
-    - uses: actions-hub/kubectl@master
-      with:
-        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+      - uses: actions/checkout@v1
+      - uses: actions-hub/kubectl@master
+        with:
+         base64-kube-config: ${{ secrets.KUBE_CONFIG }}
     
-    - name: kubectl run
-      run: kubectl get pods
+      - name: kubectl run
+        run: kubectl get pods
             
        
