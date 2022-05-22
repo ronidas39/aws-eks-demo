@@ -5,14 +5,14 @@ kind: ClusterConfig
 
 metadata:
   name: cluster-3
-  region: eu-north-1
+  region: us-east-1
 
 nodeGroups:
   - name: ng1-public
-    instanceType: m5.xlarge
+    instanceType: t2.micro
     instanceName: custom-node-name
-    desiredCapacity: 4
+    desiredCapacity: 2
   - name: ng2-private
-    instanceType: m5.large
-    desiredCapacity: 10
+    instanceType: t2.micro
+    desiredCapacity: 2
     privateNetworking: true
