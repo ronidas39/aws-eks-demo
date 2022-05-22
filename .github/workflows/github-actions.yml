@@ -44,5 +44,14 @@ jobs:
         run: |
              run: |
              curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
+             
+  kubectl:
+    runs-on: ubuntu-latest
+    steps:
+    - name: kubectrl run
+    - uses: tale/kubectl-action@v1
+      with:
+        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+    - run: kubectl get pods
             
        
