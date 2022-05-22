@@ -54,6 +54,6 @@ jobs:
         base64-kube-config: ${{ secrets.KUBE_CONFIG }}
     
     - name: kubectl run
-    - run: kubectl get pods
+      run: kubectl get pods
             
        
