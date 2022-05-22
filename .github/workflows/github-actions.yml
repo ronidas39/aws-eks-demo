@@ -63,7 +63,10 @@ jobs:
            kubectl get pv task-pv-volume
            kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml
            kubectl get deployments
-           kubectl get pvc
+           kubectl get deployments
+           kubectl get deployments
+           kubectl get deployments
+           kubectl get pods
            
   run-if-failed:
     runs-on: ubuntu-latest
