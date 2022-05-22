@@ -37,6 +37,12 @@ jobs:
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
       - uses: actions/checkout@v2
       - name: Run Eks
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+           role-to-assume: arn:aws:iam::321089933200:role/testrone
+           aws-region: us-east-1
+           
+      - name: run aws 
         working-directory: ./dir1
         run: |
              eksctl create cluster -f cluster.yaml
