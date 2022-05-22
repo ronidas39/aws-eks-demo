@@ -49,7 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: kubectrl get cred
-      uses: tale/kubectl-action@v1
+    - uses: actions/checkout@v1
+    - uses: actions-hub/kubectl@master
       with:
         base64-kube-config: ${{ secrets.KUBE_CONFIG }}
     
