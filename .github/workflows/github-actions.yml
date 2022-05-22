@@ -39,5 +39,5 @@ jobs:
       - name: Run Eks
         working-directory: ./dir1
         run: |
-            pwd
+            ls -l
        
