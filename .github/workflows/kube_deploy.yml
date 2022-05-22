@@ -13,6 +13,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Configure AWS credentials from Test account
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::321089933200:role/testrone
+        aws-region: us-east-1
     - name: Create kubeconfig
       run: |
         mkdir ${HOME}/.kube
