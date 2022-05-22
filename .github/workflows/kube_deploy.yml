@@ -29,6 +29,7 @@ jobs:
     - name: Use context
       run: kubectl config use-context arn:aws:eks:us-east-1:321089933200:cluster/cluster-3
     - name: k8s check
+      working-directory: ./dir2
       run: |
            kubectl get pods
            kubectl create -f pvc.yaml
