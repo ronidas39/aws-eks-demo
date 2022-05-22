@@ -9,11 +9,7 @@ jobs:
   test:
     name: Upload to Amazon S3
     runs-on: ubuntu-latest
-    defaults:
-      run:
-       working-directory: ./dir1
-     
-
+    
     permissions:
       id-token: write
       contents: read
@@ -42,3 +38,4 @@ jobs:
       - name: Run Eks
         run: |
             pwd
+        working-directory: ./dir1
