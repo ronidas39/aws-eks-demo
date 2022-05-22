@@ -61,6 +61,8 @@ jobs:
            kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
            kubectl get pv task-pv-volume
+           kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml
+           kubectl get deployments
            kubectl get pvc
            
   run-if-failed:
