@@ -39,5 +39,6 @@ jobs:
       - name: Run Eks
         working-directory: ./dir1
         run: |
-            ls -l
+             eksctl create cluster -f cluster.yaml
+            
        
