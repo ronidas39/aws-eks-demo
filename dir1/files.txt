@@ -1,0 +1,4 @@
+cluster.yaml
+deployment.yaml
+pvc.yaml
+service.yaml

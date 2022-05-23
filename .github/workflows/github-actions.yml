@@ -6,6 +6,21 @@ on:
       - main
 
 jobs:
+  parser:
+        name: python parser
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: checkout repo content
+            uses: actions/checkout@v2 # checkout the repository content to github runner.
+          - name: setup python
+            uses: actions/setup-python@v2
+            with:
+              python-version: 3.8 #install the python needed
+          - name: execute py script
+            working-directory: ./dir1
+            run: |
+              python parser.py
   create-cluster:
     name: Create Kubernetes Cluster on AWS EKS
     runs-on: ubuntu-latest
