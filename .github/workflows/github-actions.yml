@@ -70,3 +70,4 @@ jobs:
            kubectl get service | grep nginx
            kubectl describe service nginx
            kubectl get pods
+           curl "localhost:80"
