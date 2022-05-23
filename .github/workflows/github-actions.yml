@@ -48,47 +48,5 @@ jobs:
         eksctl upgrade cluster --config-file cluster.yaml
         echo "cluster created"
         fi
-              
-  create-components:
-    needs: [create-cluster]
-    if: always() && (needs.create-cluster.result == 'success')
-    name: Create deployment,pvc,service for Kubernetes
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-    - name: Get Aws credentials
-      uses: actions/checkout@v2
-    - name: Configure AWS credentials from Test account
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: arn:aws:iam::321089933200:role/testrone
-        aws-region: us-east-1
-    - name: Get Kube config file
-      run: |
-        mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-        cat ${HOME}/.kube/config
-    - name: Use context
-      run: kubectl config use-context arn:aws:eks:us-east-1:321089933200:cluster/cluster-3
-    - name: Creating deployment,service,pvc
-      working-directory: ./dir1
-      run: |
-           kubectl get pods
-           kubectl delete -f pvc.yaml
-           kubectl create -f pvc.yaml
-           kubectl get pv test-pv-volume
-           kubectl apply -f deployment.yaml
-           kubectl get deployments
-           kubectl get deployments
-           kubectl get deployments
-           kubectl get deployments
-           kubectl apply -f service.yaml
-           kubectl get service | grep nginx
-           kubectl describe service nginx
-           kubectl get pods
-           kubectl get pod -o wide
-           ls -l
           
      
