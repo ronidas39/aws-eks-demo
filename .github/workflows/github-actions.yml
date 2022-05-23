@@ -6,27 +6,7 @@ on:
       - main
 
 jobs:
-  parser:
-        name: python parser
-        runs-on: ubuntu-latest
-
-        steps:
-          - name: checkout repo content
-            uses: actions/checkout@v2 # checkout the repository content to github runner.
-          - name: setup python
-            uses: actions/setup-python@v2
-            with:
-              python-version: 3.8 #install the python needed
-          - name: execute py script
-            working-directory: ./dir1
-            run: |
-              python -m pip install --upgrade pip
-              pip3 install pyyaml
-              python3 parser.py
-              pwd
-              ls -l
   create-cluster:
-    
     name: Create Kubernetes Cluster on AWS EKS
     needs: [parser]
     if: always() && (needs.parser.result == 'success')
@@ -98,7 +78,7 @@ jobs:
       working-directory: ./dir1
       run: |
            kubectl get pods
-           kubectl delete -f pvc.yaml
+           kubectl delete -f pvc1.yaml
            kubectl create -f pvc.yaml
            kubectl get pv test-pv-volume
            kubectl apply -f deployment.yaml
