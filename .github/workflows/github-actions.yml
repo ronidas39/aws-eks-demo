@@ -8,8 +8,8 @@ on:
       - dir1/**
 
 jobs:
-  test:
-    name: Upload to Amazon S3
+  create-cluster:
+    name: Create Kubernetes Cluster on AWS EKS
     runs-on: ubuntu-latest
     
     permissions:
@@ -25,7 +25,7 @@ jobs:
         role-to-assume: arn:aws:iam::321089933200:role/testrone
         aws-region: us-east-1
 
-    - name: Copy files to the test website with AWS CLI
+    - name: Creating the cluster
       working-directory: ./dir1
       run: |
         ls -l
@@ -33,28 +33,30 @@ jobs:
         curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
         eksctl upgrade cluster --config-file cluster.yaml
         
-  deploy:
-    name: Deploy to Kubernetes
+  create-components:
+    needs: [create-cluster]
+    if: always() && (needs.create-cluster.result == 'success')
+    name: Create deployment,pvc,service for Kubernetes
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     steps:
-    - name: Checkout code
+    - name: Get Aws credentials
       uses: actions/checkout@v2
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: arn:aws:iam::321089933200:role/testrone
         aws-region: us-east-1
-    - name: Create kubeconfig
+    - name: Get Kube config file
       run: |
         mkdir ${HOME}/.kube
         echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
         cat ${HOME}/.kube/config
     - name: Use context
       run: kubectl config use-context arn:aws:eks:us-east-1:321089933200:cluster/cluster-3
-    - name: k8s check
+    - name: Creating deployment,service,pvc
       working-directory: ./dir2
       run: |
            kubectl get pods
@@ -70,19 +72,3 @@ jobs:
            kubectl get service | grep nginx
            kubectl describe service nginx
            kubectl get pods
-           
-  run-if-failed:
-    runs-on: ubuntu-latest
-    needs: [test]
-    if: always() && (needs.test.result == 'success')
-    steps:
-      - name: Needs context
-        uses: actions/checkout@v2
-           
-      - name: run aws install
-        working-directory: ./dir1
-        run: |
-             run: |
-             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
-            
-       
