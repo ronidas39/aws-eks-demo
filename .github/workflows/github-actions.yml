@@ -37,12 +37,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    
-    - name: Check file existence
-      id: check_files
-      uses: andstor/file-existence-action@v1
-      with:
-        files: "./dir1/parser_ok.txt"
 
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
@@ -52,13 +46,14 @@ jobs:
 
     - name: Creating the cluster
       working-directory: ./dir1
-      if: steps.check_files.outputs.files_exists == 'true'
       run: |
+        if test -f "$FILE"; then
         ls -l
         aws s3 ls
         curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
         eksctl upgrade cluster --config-file cluster.yaml
-        
+        fi
+              
   create-components:
     needs: [create-cluster]
     if: always() && (needs.create-cluster.result == 'success')
@@ -85,7 +80,8 @@ jobs:
     - name: Creating deployment,service,pvc
       working-directory: ./dir1
       run: |
-           kubectl get pods
+           if test -f "$FILE"; then
+            kubectl get pods
            kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
            kubectl get pv task-pv-volume
@@ -101,4 +97,6 @@ jobs:
            kubectl get pod -o wide
            ls -l
            rm -rf parser_ok.txt
+            fi
+          
      
