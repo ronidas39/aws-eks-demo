@@ -61,12 +61,12 @@ jobs:
            kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
            kubectl get pv task-pv-volume
-           kubectl create -f deployment.yaml
+           kubectl apply -f deployment.yaml
            kubectl get deployments
            kubectl get deployments
            kubectl get deployments
            kubectl get deployments
-           kubectl create -f service.yaml
+           kubectl apply -f service.yaml
            kubectl get service | grep nginx
            kubectl describe service nginx
            kubectl get pods
