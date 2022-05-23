@@ -26,6 +26,7 @@ jobs:
               pwd
               ls -l
   create-cluster:
+    
     name: Create Kubernetes Cluster on AWS EKS
     needs: [parser]
     if: always() && (needs.parser.result == 'success')
@@ -37,6 +38,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    
+    - name: checkout repo content
+      uses: actions/checkout@v2 # checkout the repository content to github runner.
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+      python-version: 3.8 #install the python needed
+    - name: execute py script
+      working-directory: ./dir1
+      run: |
+          python -m pip install --upgrade pip
+          pip3 install pyyaml
+          python3 parser.py
+          pwd
+          ls -l
 
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
@@ -81,7 +97,6 @@ jobs:
     - name: Creating deployment,service,pvc
       working-directory: ./dir1
       run: |
-           if test -f "parser_ok.txt"; then
            kubectl get pods
            kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
@@ -97,8 +112,5 @@ jobs:
            kubectl get pods
            kubectl get pod -o wide
            ls -l
-           rm -rf parser_ok.txt
-           echo "deploymemt created with service and pvc"
-           fi
           
      
