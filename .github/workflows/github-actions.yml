@@ -55,7 +55,7 @@ jobs:
     - name: Use context
       run: kubectl config use-context arn:aws:eks:us-east-1:321089933200:cluster/cluster-3
     - name: Creating deployment,service,pvc
-      working-directory: ./dir2
+      working-directory: ./dir1
       run: |
            kubectl get pods
            kubectl delete -f pvc.yaml
