@@ -20,7 +20,9 @@ jobs:
           - name: execute py script
             working-directory: ./dir1
             run: |
-              python parser.py
+              python -m pip install --upgrade pip
+              pip3 install pyyaml
+              python3 parser.py
   create-cluster:
     name: Create Kubernetes Cluster on AWS EKS
     runs-on: ubuntu-latest
