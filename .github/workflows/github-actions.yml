@@ -8,8 +8,6 @@ on:
 jobs:
   create-cluster:
     name: Create Kubernetes Cluster on AWS EKS
-    needs: [parser]
-    if: always() && (needs.parser.result == 'success')
     runs-on: ubuntu-latest
     
     permissions:
