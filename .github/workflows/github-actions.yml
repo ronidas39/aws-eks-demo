@@ -73,4 +73,4 @@ jobs:
            kubectl exec -i nginx-deployment-66b6c48dd5-5fp7j -- /bin/bash
            sudo apt update
            sudo apt install curl
-           sudo curl http://localhost/
+           sudo curl http://192.168.113.87:80/
