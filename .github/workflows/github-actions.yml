@@ -70,4 +70,7 @@ jobs:
            kubectl get service | grep nginx
            kubectl describe service nginx
            kubectl get pods
-           kubectl exec -i nginx-deployment-66b6c48dd5-5fp7j -- /bin/bash           
+           kubectl exec -i nginx-deployment-66b6c48dd5-5fp7j -- /bin/bash
+           apt update
+           apt install curl
+           curl http://localhost/
