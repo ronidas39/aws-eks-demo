@@ -27,6 +27,8 @@ jobs:
               ls -l
   create-cluster:
     name: Create Kubernetes Cluster on AWS EKS
+    needs: [parser]
+    if: always() && (needs.parser.result == 'success')
     runs-on: ubuntu-latest
     
     permissions:
@@ -97,4 +99,5 @@ jobs:
            kubectl describe service nginx
            kubectl get pods
            kubectl get pod -o wide
+           rm -rf parser_ok.txt
      
