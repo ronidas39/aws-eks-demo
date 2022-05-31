@@ -45,7 +45,7 @@ jobs:
         ls -l
         aws s3 ls
         curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp;sudo mv /tmp/eksctl /usr/local/bin;eksctl version
-        eksctl create cluster --config-file cluster.yaml
+        eksctl upgrade cluster --config-file cluster.yaml
         echo "cluster created"
         fi
   
@@ -76,7 +76,7 @@ jobs:
       working-directory: ./dir1
       run: |
            kubectl get pods
-           kubectl delete -f pvc.yaml
+           #kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
            kubectl get pv test-pv-volume
            kubectl apply -f deployment.yaml
