@@ -76,7 +76,7 @@ jobs:
       working-directory: ./dir1
       run: |
            kubectl get pods
-           #kubectl delete -f pvc.yaml
+           kubectl delete -f pvc.yaml
            kubectl create -f pvc.yaml
            kubectl get pv test-pv-volume
            kubectl apply -f deployment.yaml
